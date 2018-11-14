@@ -1,0 +1,1157 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PlayGen.SUGAR.Unity</name>
+    </assembly>
+    <members>
+        <member name="T:PlayGen.SUGAR.Unity.AccountUnityClient">
+            <summary>
+            Use this to Sign In, Register, Logout and manage other account functionality
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.AccountUnityClient.HasInterface">
+            <value>
+            Has an interface been provided for this Unity Client in the current orientation
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.AccountUnityClient.HasSavedLogin">
+            <value>
+            Whether there are login details that were saved by a previously using "remember me".
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.AccountUnityClient.IsActive">
+            <value>
+            Is there an interface and if so is it currently active
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.AccountUnityClient.DisplayLogInPanel(System.Action{System.Boolean})">
+            <summary>
+            Displays interface if provided and allowAutoLogin is false. Attempts automatic sign in using provided details if allowAutoLogin is true.
+            </summary>
+            <remarks>
+            - allowAutoLogin is set to false after automatic sign in is first attempted.
+            - If there is no interface provided callback will return false
+            </remarks>
+            <param name="success">Whether the user successfully signed in.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.AccountUnityClient.Hide">
+            <summary>
+            Hide the AccountPanel game object
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.AccountUnityClient.Logout(System.Action{System.Boolean})">
+            <summary>
+            Sign out the currently signed in user.
+            </summary>
+            <remarks>
+            - If no user is currently signed in, callback returns false
+            </remarks>
+            <param name="success">Whether the currently signed in user successfully signed out.</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseAccountInterface">
+            <summary>
+            Base abstract class for controlling the interface related to Account functionality.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._name">
+            <summary>
+            Input field used for providing usernames. Required.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._password">
+            <summary>
+            Input field used for providing passwords. Required.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._loginButton">
+            <summary>
+            Button used to trigger attempting to sign in. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._registerButton">
+            <summary>
+            Button used to trigger attempting to register a new account. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._rememberMeToggle">
+            <summary>
+            Toggle used to enable/disable remembering the next signed in user's details for future sessions. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._closeButton">
+            <summary>
+            Button used to disable this object. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseAccountInterface._errorText">
+            <summary>
+            Text object which displays errors if/when they occur. Can be left null.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseAccountInterface.Awake">
+            <summary>
+            Base Awake method adds onClick listeners for the login, register and close buttons.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.ActorResponseAllowableActions">
+            <summary>
+            ActorResponse with additional information on if the current user can add and remove them.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.ActorResponseAllowableActions.Actor">
+            <summary>
+            ActorResponse contains the actor ID and Name.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.ActorResponseAllowableActions.CanAdd">
+            <summary>
+            Can the currently signed in user add or accept a request from this actor?
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.ActorResponseAllowableActions.CanRemove">
+            <summary>
+            Can the currently signed in user remove or reject a request from this actor?
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseInterface">
+            <summary>
+            Base abstract class for controlling UI objects
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseInterface._errorText">
+            <summary>
+            Text object which displays errors if/when they occur. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseInterface._closeButton">
+            <summary>
+            Button used to disable this object. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseInterface._signinButton">
+            <summary>
+            Button used to display account interface (if available) if no user is signed in. Can be left null.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.Awake">
+            <summary>
+            Base Awake method adds onClick listeners for the close and signin buttons.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.PreDisplay">
+            <summary>
+            Functionality triggered before displaying the interface.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.Show(System.Boolean)">
+            <summary>
+            Used to display/redraw the UI on this object. Triggers methods in this order:
+            HideInterfaces - abstract method used to enable/disable UI on this object and hide other UI objects.
+            PreDraw - private method. Activates object using SUGARManager.Unity.EnableObject, resets error text and hides signin button.
+            Draw - abstract method where creation and placement of the UI should be performed.
+            ErrorDraw - where error text is determined and set, if required.
+            </summary>
+            <param name="loadingSuccess">Was the data successfully loaded?</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.HideInterfaces">
+            <summary>
+            Should be used to enable/disable UI on this object and hide other UI objects.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.Draw">
+            <summary>
+            Should be used to set, create and place UI on this object.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.ErrorDraw(System.Boolean)">
+            <summary>
+            Should be used to set error text and disable UI objects due to errors, if required. By default sets error text in case of no user being signed in or loading issues.
+            </summary>
+            <param name="loadingSuccess">Was the data successfully loaded?</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.LoadErrorText">
+            <summary>
+            Get error string if there were issues loading what was required.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.NoResultsErrorText">
+            <summary>
+            Get error string if there were no results to display.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseInterface.OnSignIn">
+            <summary>
+            Triggered by successful sign-in via this interface. 
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseUnityClient`1">
+            <summary>
+            Base abstract class for UnityClient classes
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseUnityClient`1._landscapeInterface">
+            <summary>
+            Landscape interface for this area of functionality. Can be left null if not required.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseUnityClient`1._portraitInterface">
+            <summary>
+            Portrait interface for this area of functionality. Can be left null if not required.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.BaseUnityClient`1._interface">
+            <summary>
+            The interface that is used for the current aspect ratio.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.BaseUnityClient`1.HasInterface">
+            <summary>
+            Has an interface been provided for this Unity Client?
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.BaseUnityClient`1.IsActive">
+            <summary>
+            Is there an interface and if so is it currently active?
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUnityClient`1.Update">
+            <summary>
+            Change the used interface if the aspect ratio changes.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUnityClient`1.Hide">
+            <summary>
+            Hide the UI object if it is currently active.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseEvaluationListInterface">
+            <summary>
+            Base abstract class for controlling the interface related to displaying evaluation progress.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseEvaluationListInterface.HideInterfaces">
+            <summary>
+            Hides Account, GameLeaderboard, Leaderboard, UserFriend, GroupMember and UserGroup interfaces.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseEvaluationListInterface.ErrorDraw(System.Boolean)">
+            <summary>
+            Used to set error text in case of no user being signed in, loading issues or if no results are available.
+            </summary>
+            <param name="loadingSuccess">Was the data successfully loaded?</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseEvaluationListInterface.LoadErrorText">
+            <summary>
+            Get error string from Localization with key "EVALUATION_LOAD_ERROR" if there were issues loading the evaluation list.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseEvaluationListInterface.NoResultsErrorText">
+            <summary>
+            Get error string from Localization with key "NO_EVALUATION_ERROR" if there were no evaluations to display.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseEvaluationPopupInterface">
+            <summary>
+            Base abstract class for controlling the interface related to display evaluation notifications when an evalaution is completed.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseEvaluationPopupInterface._name">
+            <summary>
+            Text used for display notification string (usually evaluation name). Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseEvaluationPopupInterface._image">
+            <summary>
+            Image displayed alongside notification. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseEvaluationPopupInterface._evaluationQueue">
+            <summary>
+            Queue of notifications to be displayed.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseEvaluationPopupInterface.Display(PlayGen.SUGAR.Client.EvaluationEvents.EvaluationNotification)">
+            <summary>
+            Functionality to be triggered when a notification is received.
+            </summary>
+            <param name="notification">Notification which will be displayed.</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.EvaluationUnityClient">
+            <summary>
+            Use this for gathering evaluation progress and notifications when an evaluation is completed.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.EvaluationUnityClient.Progress">
+            <value>
+            Current completion status for evaluations in this application for the currently signed in user.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.EvaluationUnityClient.Update">
+            <summary>
+            Update the interface to be used when the aspect ration changes
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.EvaluationUnityClient.DisplayAchievementList">
+            <summary>
+            Gathers current user achievement completion status and display the interface if it is provided and the GET Achievements request was successful.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.EvaluationUnityClient.DisplayGroupAchievementList">
+            <summary>
+            Gathers current group achievement completion status and displays interface if it is provided and the GET Achievements request was successful.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.EvaluationUnityClient.DisplaySkillList">
+            <summary>
+            Gathers current user skill completion status and display the interface if it is provided and the GET Skill request was successful.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.EvaluationUnityClient.DisplayGroupSkillList">
+            <summary>
+            Gathers current group skill completion status and display the interface if it is provided and the GET Skill request was successful.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.EvaluationUnityClient.ForceNotification(System.String)">
+            <summary>
+            Force a notification to be displayed with the provided notification text.
+            </summary>
+            <remarks>
+            - This uses the EvaluationPopupInterface to display the text in the application
+            </remarks>
+            <param name="notification">String which will be used in the notification.</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseUserFriendInterface">
+            <summary>
+            Base abstract class for controlling the UI object related to friends lists
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.HideInterfaces">
+            <summary>
+            Hides Account, GameLeaderboard, Leaderboard, Evaluation, GroupMember and UserGroup UI objects.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.LoadErrorText">
+            <summary>
+            Get error string from Localization with key "FRIENDS_LOAD_ERROR" if there were issues loading the friends list.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.NoResultsErrorText">
+            <summary>
+            Get error string from Localization with key "NO_RESULTS_ERROR" if there were no friends to display.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.GetFriends">
+            <summary>
+            Get and display the friends list for the currently signed in user.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.GetPendingSent">
+            <summary>
+            Get and display the list of pending sent friend requests for the currently signed in user.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.GetPendingReceived">
+            <summary>
+            Get and display the list of pending received friend requests for the currently signed in user.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserFriendInterface.GetSearchResults(System.String)">
+            <summary>
+            Get and display the search results for the provided string.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.UserFriendUnityClient">
+            <summary>
+            Use this to get current user's list of friends and send and handle friend requests and other friend related actions
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserFriendUnityClient.Friends">
+            <value>
+            Friends of the currently signed in user.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserFriendUnityClient.PendingSent">
+            <value>
+            Pending sent friend requests for currently signed in user.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserFriendUnityClient.PendingReceived">
+            <value>
+            Received friend requests for currently signed in user.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserFriendUnityClient.SearchResults">
+            <value>
+            Search results for the last search made.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserFriendUnityClient.Display">
+            <summary>
+            Updates lists and displays UI interface if it has been provided.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserFriendUnityClient.AddFriend(System.Int32,System.Boolean)">
+            <summary>
+            Send friend request to another user
+            </summary>
+            <param name="id">The id of the user to add</param>
+            <param name="reload">**Optional** Whether the interface should reload after the Friend is Added (default: true)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserFriendUnityClient.ManageFriendRequest(System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Resolve friend requests sent to and from the current user
+            </summary>
+            <param name="id">The Id of the user who sent/received the request</param>
+            <param name="accept">Whether the request has been accepted</param>
+            <param name="reverse">Whether the request is cancelled (default: false)</param>
+            <param name="reload">**Optional** Whether the interface should reload after the Friend is Added (default: true)</param>
+            <remarks>
+            - reverse and accept cannot both be set to true, if reverse = true, then the request is cancelled.
+            </remarks>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserFriendUnityClient.RemoveFriend(System.Int32,System.Boolean)">
+            <summary>
+            Remove a relationship between the currently signed in user and another user.
+            </summary>
+            <param name="id">The Id for the user which the current signed in user wishes to remove</param>
+            <param name="reload">**Optional** Whether the UI should be redrawn upon Friend removal (default: true)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserFriendUnityClient.GetFriendsList(System.Action{System.Boolean})">
+            <summary>
+            Get friends list for the currently signed in user.
+            </summary>
+            <param name="success">Callback which contains Whether the list was successfully returned</param>
+            <remarks>,
+            - If the retrieved list is empty, returns true
+            </remarks>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.GameDataUnityClient">
+            <summary>
+            Use this to GET and POST data related to the game.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.Get(System.Action{System.Collections.Generic.IEnumerable{PlayGen.SUGAR.Contracts.EvaluationDataResponse}},System.String[])">
+            <summary>
+            Get GameData for the currently signed in user for this game.
+            </summary>
+            <param name="success">Callback with a list of gathered EvaluationDataResponse results.</param>
+            <param name="keys">**Optional** Keys to search and return values for. (default: null)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.GetHighest(System.String,PlayGen.SUGAR.Common.EvaluationDataType,System.Action{PlayGen.SUGAR.Contracts.EvaluationDataResponse})">
+            <summary>
+            Get the data related to the highest value recorded for the currently signed in user for the key and dataType provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="dataType">EvaluationDataType of the GameData.</param>
+            <param name="success">Callback which contains the gathered result.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.GetLowest(System.String,PlayGen.SUGAR.Common.EvaluationDataType,System.Action{PlayGen.SUGAR.Contracts.EvaluationDataResponse})">
+            <summary>
+            Get the data related to the lowest value recorded for the currently signed in user for the key and dataType provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="dataType">EvaluationDataType of the GameData.</param>
+            <param name="success">Callback which contains the gathered result.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.GetCumulative(System.String,PlayGen.SUGAR.Common.EvaluationDataType,System.Action{PlayGen.SUGAR.Contracts.EvaluationDataResponse})">
+            <summary>
+            Get the cumulative value for the currently signed in user for the key and dataType provided.
+            </summary>
+            <remarks>
+            - EvaluationDataType should be a type that can be added together, eg. Long
+            </remarks>
+            <param name="key">Name of the GameData key.</param>
+            <param name="dataType">EvaluationDataType of the GameData.</param>
+            <param name="success">Callback which contains the gathered result.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.GetCount(System.String,PlayGen.SUGAR.Common.EvaluationDataType,System.Action{PlayGen.SUGAR.Contracts.EvaluationDataResponse})">
+            <summary>
+            Get the count of recorded values for the currently signed in user for the key and dataType provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="dataType">EvaluationDataType of the GameData.</param>
+            <param name="success">Callback which contains the gathered result.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.GetEarliest(System.String,PlayGen.SUGAR.Common.EvaluationDataType,System.Action{PlayGen.SUGAR.Contracts.EvaluationDataResponse})">
+            <summary>
+            Get the earliest recorded data for the currently signed in user for the key and dataType provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="dataType">EvaluationDataType of the GameData.</param>
+            <param name="success">Callback which contains the gathered result.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.GetLatest(System.String,PlayGen.SUGAR.Common.EvaluationDataType,System.Action{PlayGen.SUGAR.Contracts.EvaluationDataResponse})">
+            <summary>
+            Get the latest recorded data for the currently signed in user for the key and dataType provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="dataType">EvaluationDataType of the GameData.</param>
+            <param name="success">Callback which contains the gathered result.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.Send(System.String,System.String,System.Action{System.Boolean})">
+            <summary>
+            Record GameData with EvaluationDataType String with the key and value provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="value">The String value that'll be recorded.</param>
+            <param name="success">**Optional** Callback returns whther the data was sent successfully (default: null)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.Send(System.String,System.Int64,System.Action{System.Boolean})">
+            <summary>
+            Record GameData with EvaluationDataType Long with the key and value provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="value">The Long value that'll be recorded.</param>
+            <param name="success">**Optional** Callback returns whther the data was sent successfully (default: null)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.Send(System.String,System.Single,System.Action{System.Boolean})">
+            <summary>
+            Record GameData with EvaluationDataType Float with the key and value provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="value">The Float value that'll be recorded.</param>
+            <param name="success">**Optional** Callback returns whther the data was sent successfully (default: null)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GameDataUnityClient.Send(System.String,System.Boolean,System.Action{System.Boolean})">
+            <summary>
+            Record GameData with EvaluationDataType Bool with the key and value provided.
+            </summary>
+            <param name="key">Name of the GameData key.</param>
+            <param name="value">The Bool value that'll be recorded.</param>
+            <param name="success">**Optional** Callback returns whther the data was sent successfully (default: null)</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseGroupMemberInterface">
+            <summary>
+            Base abstract class for controlling the UI object related to group member lists.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseGroupMemberInterface._groupName">
+            <summary>
+            Text used for providing the group name for this list. Can be left null.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseGroupMemberInterface.HideInterfaces">
+            <summary>
+            Hides Account, Evaluation, Leaderboard, GameLeaderboard and UserFriend UI objects. Set groupName text to match name of CurrentGroup.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseGroupMemberInterface.ErrorDraw(System.Boolean)">
+            <summary>
+            Used to set error text in case of no user being signed in, loading issues or if no results are available.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseGroupMemberInterface.LoadErrorText">
+            <summary>
+            Get error string from Localization with key "GROUPS_LOAD_ERROR" if there were issues loading the evaluation list.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseGroupMemberInterface.NoResultsErrorText">
+            <summary>
+            Get error string from Localization with key "NO_RESULTS_ERROR" if there were no group members to display.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseUserGroupInterface">
+            <summary>
+            Base abstract class for controlling the UI object related to user groups.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserGroupInterface.HideInterfaces">
+            <summary>
+            Hides Account, Evaluation, Leaderboard, GameLeaderboard and UserFriend UI objects.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserGroupInterface.LoadErrorText">
+            <summary>
+            Get error string from Localization with key "GROUPS_LOAD_ERROR" if there were issues loading the group list.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserGroupInterface.NoResultsErrorText">
+            <summary>
+            Get error string from Localization with key "NO_RESULTS_ERROR" if there were no groups to display.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserGroupInterface.GetGroups">
+            <summary>
+            Get and display the list of groups the currently signed in user is in.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserGroupInterface.GetPendingSent">
+            <summary>
+            Get and display the list of groups the currently signed in user has applied to join.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseUserGroupInterface.GetSearchResults(System.String)">
+            <summary>
+            Get and display the list of groups that match the search string provided.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.GroupMemberUnityClient">
+            <summary>
+            Use this for actions related to group member lists.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.GroupMemberUnityClient.CurrentGroup">
+            <value>
+            Currently selected/displayed group.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.GroupMemberUnityClient.Members">
+            <value>
+            Members for the current group.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GroupMemberUnityClient.Display(PlayGen.SUGAR.Contracts.ActorResponse)">
+            <summary>
+            Sets current group and gathers member list for that group. Displays UI interface if provided.
+            </summary>
+            <param name="group">The group which should be set to CurrentGroup</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.GroupMemberUnityClient.AddFriend(System.Int32,System.Boolean)">
+            <summary>
+            Send group request to user with id provided. 
+            </summary>
+            <param name="id">The group id</param>
+            <param name="reload">Whether the UI should reload on complete</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.UserGroupUnityClient">
+            <summary>
+            Use this to get current user's list of groups and send and handle group requests
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserGroupUnityClient.Groups">
+            <value>
+            Groups that the currently signed in user is a member of.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserGroupUnityClient.PendingSent">
+            <value>
+            Groups that the currently signed in user has requested to join.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.UserGroupUnityClient.SearchResults">
+            <value>
+            Groups that matched the last search string.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserGroupUnityClient.Display">
+            <summary>
+            Gathers updated versions of each list and displays interface UI object if it has been provided.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserGroupUnityClient.AddGroup(System.Int32,System.Boolean,System.Boolean,System.Action{System.Boolean})">
+            <summary>
+            Send group membership request to group with id provided. If reload is true, UI is also redrawn.
+            </summary>
+            <param name="id">The id of the group</param>
+            <param name="reload">**Optional** Whether the interface should reload on completion. (default: true)</param>
+            <param name="trySetAsCurrentGroup">Will set this group as the current group if the user sucesfully joins the group.</param>
+            <param name="callback">Callback with a variable indicating success or failure.</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserGroupUnityClient.ManageGroupRequest(System.Int32,System.Boolean)">
+            <summary>
+            Cancel sent membership request to group
+            </summary>
+            <param name="id">The id of the group</param>
+            <param name="reload">**Optional** Whether the interface should reload on completion. (default: true)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserGroupUnityClient.RemoveGroup(System.Int32,System.Boolean)">
+            <summary>
+            Leave a group the currently signed in user is a member of.
+            </summary>
+            <param name="id">The id of the group</param>
+            <param name="reload">**Optional** Whether the interface should reload on completion. (default: true)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.UserGroupUnityClient.GetGroupsList(System.Action{System.Boolean})">
+            <summary>
+            Get list of groups the currently signed in user is a memer of.
+            </summary>
+            <param name="success">Callback whether request was successful</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseLeaderboardInterface">
+            <summary>
+            Base abstract class for controlling the interface related to displaying the latest standings for a leaderboard.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._leaderboardName">
+            <summary>
+            Text used for displaying leaderboard name. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._leaderboardType">
+            <summary>
+            Text used for displaying current leaderboard filter. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._topButton">
+            <summary>
+            Button used to change the current leaderboard filter to 'Top'. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._nearButton">
+            <summary>
+            Button used to change the current leaderboard filter to 'Near'. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._friendsButton">
+            <summary>
+            Button used to change the current leaderboard filter to 'Friends'. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._membersButton">
+            <summary>
+            Button used to change the current leaderboard filter to 'Group Members'. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardInterface._alliancesButton">
+            <summary>
+            Button used to change the current leaderboard filter to 'Alliances'. Can be left null.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.Awake">
+            <summary>
+            Base Awake method adds onClick listeners for the close, signin, top, near, friends, group member and alliance filter buttons.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.HideInterfaces">
+            <summary>
+            Hides Account, Evaluation, UserFriend, GroupMember and UserGroup UI objects. Makes filter buttons interactable. Set leaderboard related text.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.ErrorDraw(System.Boolean)">
+            <summary>
+            Used to set error text in case of no user being signed in, loading issues or if no results are available.
+            Filter button interactable set to false if no user is signed in or loading issues occur.
+            </summary>
+            <param name="loadingSuccess">Was the data successfully loaded?</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.IsValid(PlayGen.SUGAR.Contracts.ActorResponse,PlayGen.SUGAR.Common.ActorType)">
+            <summary>
+            If the response actor isn't null, does the leaerboard ActorType match the actorType provided or the Combined ActorType
+            </summary>
+            <param name="response">Actor that would be used for the filter</param>
+            <param name="actorType">Valid actorType for the leaderboard if response is used as the basis</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.SetInteractable(UnityEngine.UI.Button,System.Boolean)">
+            <summary>
+            Set the button's interactable value
+            </summary>
+            <param name="button">Button to enable/disable the use of</param>
+            <param name="interactable">Value to change the button's interactable boolean to</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.UpdateFilter(PlayGen.SUGAR.Common.LeaderboardFilterType)">
+            <summary>
+            Change the leaderboard filter currently being used
+            </summary>
+            <param name="filter">The filter to use for display leaderboard standings</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.UpdateMultiplePerActor(System.Boolean)">
+            <summary>
+            Change the multiple per actor setting currently being used
+            </summary>
+            <param name="multiplePerActor">Setting that determines if actors can appear on a leaderboard multiple times</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.LoadErrorText">
+            <summary>
+            Get error string from Localization with key "LEADERBOARD_LOAD_ERROR" if there were issues loading the leaderboard standings list.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardInterface.NoResultsErrorText">
+            <summary>
+            Get error string from Localization with key "NO_LEADERBOARD_ERROR" if there were no leaderboard standings to display.
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface">
+            <summary>
+            Base abstract class for controlling the interface related to displaying a list of leaderboards.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface._leaderboardType">
+            <summary>
+            Text used for displaying current leaderboard type. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface._userButton">
+            <summary>
+            Button used to change the current actor type filter to 'User'. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface._groupButton">
+            <summary>
+            Button used to change the current actor type filter to 'Group'. Can be left null.
+            </summary>
+        </member>
+        <member name="F:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface._combinedButton">
+            <summary>
+            Button used to change the current actor type filter to 'Combined'. Can be left null.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface.Awake">
+            <summary>
+            Base Awake method adds onClick listeners for the close, signin, user, group and combined filter buttons.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface.HideInterfaces">
+            <summary>
+            Hides Account, Evaluation, UserFriend, GroupMember and UserGroup UI objects. Makes filter buttons interactable. Set leaderboard type related text.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface.ErrorDraw(System.Boolean)">
+            <summary>
+            Used to set error text in case of no user being signed in, loading issues or if no leaderboards are available.
+            Filter button interactable set to false if no user is signed in or loading issues occur.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface.LoadErrorText">
+            <summary>
+            Get error string from Localization with key "LEADERBOARD_LIST_LOAD_ERROR" if there were issues loading the leaderboard list.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface.NoResultsErrorText">
+            <summary>
+            Get error string from Localization with key "NO_LEADERBOARD_LIST_ERROR" if there were no leaderboards to display.
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.BaseLeaderboardListInterface.UpdateFilter(PlayGen.SUGAR.Common.ActorType)">
+            <summary>
+            Chnage the filter currently being used to get leaderboard for a particular type of actor
+            </summary>
+            <param name="filter">The filter to use for display leaderboard standings</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.LeaderboardListUnityClient">
+            <summary>
+            Use this to get a list of leaderboards for this game
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardListUnityClient.Leaderboards">
+            <value>
+            Each ActorType and list of leaderboard responses for this application.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardListUnityClient.CurrentActorType">
+            <value>
+            Currently used ActorType filter.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.LeaderboardListUnityClient.DisplayGlobalList(PlayGen.SUGAR.Common.ActorType)">
+            <summary>
+            Gathers all leaderboards not attached to a game and displays list for current ActorType if interface if provided.
+            </summary>
+            <param name="filter">**Optional** The filter type to use (default: ActorType.User)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.LeaderboardListUnityClient.DisplayGameList(PlayGen.SUGAR.Common.ActorType)">
+            <summary>
+            Gathers leaderboards for this application and displays list for current ActorType if interface if provided.
+            </summary>
+            <param name="filter">**Optional** The filter type to use (default: ActorType.User)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.LeaderboardListUnityClient.SetFilter(PlayGen.SUGAR.Common.ActorType)">
+            <summary>
+            Set the ActorType filter to use.
+            </summary>
+            <param name="filter">The new ActorType to filter by</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.LeaderboardUnityClient">
+            <summary>
+            Use this to get the current standings for a leaderboard
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardUnityClient.CurrentFilter">
+            <value>
+            Current filter to use for gathering leaderboard standings.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardUnityClient.MultiplePerActor">
+            <value>
+            Current setting for whether actors can appear on leaderboards multiple times.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardUnityClient.CurrentLeaderboard">
+            <value>
+            Current leaderboard to use for gathering leaderboard standings from.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardUnityClient.CurrentStandings">
+            <value>
+            Last set of standings gathered.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.LeaderboardUnityClient.PositionCount">
+            <value>
+            Number of results that should be gathered per call.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.LeaderboardUnityClient.Display(System.String,PlayGen.SUGAR.Common.LeaderboardFilterType,System.Boolean,System.Int32,System.Boolean)">
+            <summary>
+            Gathers information for leaderboard and displays the interface if it has been provided.
+            </summary>
+            <param name="token">The unique identifier for the Leaderboard</param>
+            <param name="filter">The Filter type to order standings by</param>
+            <param name="multiplePerActor">If the leaderboard allows for actors to appeard multiple times</param>
+            <param name="pageNumber">**Optional** The page number to start from (default: 0)</param>
+            <param name="globalLeaderboard">**Optional** Whether the leaderboard is global or in game scope. (default: false)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.LeaderboardUnityClient.GetLeaderboardStandings(System.Int32,System.Action{System.Boolean},System.Action{System.Collections.Generic.List{PlayGen.SUGAR.Contracts.LeaderboardStandingsResponse}})">
+            <summary>
+            Get standings for the current leaderboard. 
+            </summary>
+            <param name="pageNumber">The page number to retrieve</param>
+            <param name="success">Whether the standings were retrieved successfully</param>
+            <param name="result">**Optional** the results for the leaderboard standings, null value will save results to CurrentStandings (default: null)</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.LeaderboardUnityClient.SetPositionCount(System.Int32)">
+            <summary>
+            Set the maximum number of results to get per call.
+            </summary>
+            <param name="count">The Maximum number of results</param>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.ResourceUnityClient">
+            <summary>
+            Use this to get current resources, add resources and send resources to other users
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.ResourceUnityClient.UserGameResources">
+            <value>
+            Resources for the currently signed in user for this game.
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.ResourceUnityClient.GlobalUserResources">
+            <value>
+            Resources for the user not tied to any game.
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.ResourceUnityClient.GetFromCache(System.String,System.Boolean)">
+            <summary>
+            Get the current resource amount for the current user from the local cache. Cache is updated at the rate set in the Inspector.
+            </summary>
+            <param name="key">Resource key value is being gathered for</param>
+            <param name="globalResource">**Optional** Get value for a global resource rather than one for this game. (default: false)</param>
+            <remarks>
+            - If globalResource is true, resource will be global rather than for the game.
+            </remarks>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.ResourceUnityClient.GetFromServer(System.Action{System.Boolean,System.Collections.Generic.Dictionary{System.String,System.Int64}},System.String[],System.Boolean)">
+            <summary>
+            Get the resources with the keys provided for the current user directly from the server.
+            </summary>
+            <param name="result">Callback which will return whether the call to the server was successful and a dictionary of all the keys and their current values</param>
+            <param name="keys">Resource keys values are being gathered for</param>
+            <param name="globalResource">**Optional** Get resource values for global resources rather than one for this game. (default: false)</param>
+            /// <remarks>
+            - If globalResource is true, resource will be global rather than for the game.
+            </remarks>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.ResourceUnityClient.Transfer(System.Int32,System.String,System.Int64,System.Action{System.Boolean,System.Int64},System.Boolean)">
+            <summary>
+            Transfer the resource with the key provided from the currently signed in user
+            </summary>
+            <param name="recipientId">Id of the actor who will receive the resource</param>
+            <param name="key">Name of the resource being transferred</param>
+            <param name="amount">The amount being transferred</param>
+            <param name="success">Callback which returns whether the transfer was a success and the current value of the resource that was transferred</param>
+            <param name="globalResource">**Optional** Setting for if the resource is global rather than for this game. (default: false)</param>
+            <remarks>
+            If globalResource is true, resource transferred will be global rather than for the game.
+            </remarks>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.ResourceUnityClient.TryTake(System.Int32,System.String,System.Int64,System.Action{System.Boolean,System.Int64},System.Boolean)">
+            <summary>
+            Transfer the resource with the key provided to the currently signed in user
+            </summary>
+            <param name="senderId">Id of the actor who will send the resource</param>
+            <param name="key">Name of the resource being transferred</param>
+            <param name="amount">The amount being transferred</param>
+            <param name="success">Callback which returns whether the transfer was a success and the current value of the resource that was transferred</param>
+            <param name="globalResource">**Optional** Setting for if the resource is global rather than for this game. (default: false)</param>
+            <remarks>
+            If globalResource is true, resource transferred will be global rather than for the game.
+            </remarks>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.ResourceUnityClient.Add(System.String,System.Int64,System.Action{System.Boolean,System.Int64},System.Boolean)">
+            <summary>
+            Add the resource with the key provided to the currently signed in user
+            If globalResource is true, resource transferred will be global rather than for the game.
+            </summary>
+            <param name="key">Name of the resource being transferred</param>
+            <param name="amount">The amount being transferred</param>
+            <param name="success">Callback which returns whether the transfer was a success and the current value of the resource that was transferred</param>
+            <param name="globalResource">**Optional** Setting for if the resource is global rather than for this game. (default: false)</param>
+            <remarks>
+            If globalResource is true, resource transferred will be global rather than for the game.
+            </remarks>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.SUGARManager">
+            <summary>
+            Access point for SUGAR related classes.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.GameId">
+            <summary>
+            GameId for this application.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.CurrentUser">
+            <summary>
+            Currently signed in user.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.UserSignedIn">
+            <summary>
+            Is there a user currently signed in.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.CurrentGroup">
+            <summary>
+            Currently signed in user's primary group.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.ClassId">
+            <summary>
+            Group name gathered from auto sign in.
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.Account">
+            <summary>
+            Unity client for calls related to accounts
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.Evaluation">
+            <summary>
+            Unity client for calls related to evaluations
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.UserFriend">
+            <summary>
+            Unity client for calls related to friend lists
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.GameData">
+            <summary>
+            Unity client for calls related to gamedata
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.GroupMember">
+            <summary>
+            Unity client for calls related to group members
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.GameLeaderboard">
+            <summary>
+            Unity client for calls related to leaderboard lists
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.Leaderboard">
+            <summary>
+            Unity client for calls related to leaderboard standings
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.Resource">
+            <summary>
+            Unity client for calls related to resources
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.UserGroup">
+            <summary>
+            Unity client for calls related to user groups
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.Unity">
+            <summary>
+            Class for managing Unity elements of the asset
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARManager.Client">
+            <summary>
+            Class for contacting SUGAR client functionality
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARManager.SetCurrentGroup(PlayGen.SUGAR.Contracts.ActorResponse)">
+            <summary>
+            Set the 'primary' group for the currently signed in user
+            </summary>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARManager.SetClassId(System.String)">
+            <summary>
+            Set the ClassId for the currently signed in user
+            </summary>
+        </member>
+        <member name="T:PlayGen.SUGAR.Unity.SUGARUnityManager">
+            <summary>
+            Class for managing Unity elements of the asset
+            </summary>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARUnityManager.AnyActiveUI">
+            <value>
+            Is any piece of SUGAR UI currently active?
+            </value>
+        </member>
+        <member name="P:PlayGen.SUGAR.Unity.SUGARUnityManager.SpinnerActive">
+            <value>
+            Whether the spinner UI is currently active
+            </value>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.CreateSUGARClient(System.String)">
+            <summary>
+            Create a SUGAR Client from a string 
+            </summary>
+            <param name="baseAddress">uri to create SUGAR Client from</param>
+            <returns>new SUGARClient</returns>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.GameValidityCheck">
+            <summary>
+            Check if the current game is valid by the current gameToken
+            </summary>
+            <returns>Whether the _gameToken returns a valid game</returns>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.SetBlocker(System.Boolean,System.Boolean)">
+            <summary>
+            Setup for blocker
+            </summary>
+            <param name="use">Whether the blocker should be used</param>
+            <param name="block">Whether clicking on the blocker should close the current UI</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.EnableObject(UnityEngine.GameObject)">
+            <summary>
+            Enable a piece of SUGAR UI.
+            </summary>
+            <remarks>
+            - This should be used instead of SetActive to ensure UI and blocker ordering is correct.
+            </remarks>
+            <param name="activeObject">The object that should be enabled</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.DisableObject(UnityEngine.GameObject)">
+            <summary>
+            Disable a piece of SUGAR UI.
+            </summary>
+            <remarks>
+            - This should be used instead of SetActive to ensure UI and blocker ordering is correct.
+            </remarks>
+            <param name="activeObject">The object that should be disabled</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.SetSpinner(System.Boolean,System.Int32)">
+            <summary>
+            Setup the spinner
+            </summary>
+            <param name="clockwise">Whether the spinner should rotate clockwise or not</param>
+            <param name="speed">The speed of the rotation</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.StartSpinner(System.String)">
+            <summary>
+            Start the loading spinner.
+            </summary>
+            <remarks>
+            - This method should be used instead of directly calling Loading.Start to ensure UI and blocker ordering is correct.
+            </remarks>
+            <param name="text">**Optional** Text to display with the spinner. (default: "")</param>
+        </member>
+        <member name="M:PlayGen.SUGAR.Unity.SUGARUnityManager.StopSpinner(System.String,System.Single)">
+            <summary>
+            Stop the loading spinner.
+            </summary>
+            <remarks>
+            - This method should be used instead of directly calling Loading.Start to ensure UI and blocker ordering is correct.
+            </remarks>
+            <param name="text">**Optional** Text to display when the spinner stops. (default: "")</param>
+            <param name="stopDelay">**Optional** The time, in seconds, the text should be displayed for before disabling (default: 0)</param>
+        </member>
+    </members>
+</doc>

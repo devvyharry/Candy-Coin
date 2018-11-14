@@ -1,0 +1,38 @@
+{
+  "game": "Test Game",
+  "achievements": [
+    {
+      "Token": "test_achievement",
+      "GameId": null,
+      "Name": "Test Achievement",
+      "Description": "Test Achievement",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "test_key",
+          "EvaluationDataCategory": "GameData",
+          "EvaluationDataType": "String",
+          "CriteriaQueryType": "Any",
+          "ComparisonType": "Equals",
+          "Scope": "Actor",
+          "Value": "yep"
+        }
+      ],
+      "Rewards": []
+    }
+  ],
+  "skills": [],
+  "leaderboards": [
+    {
+      "Token": "test_leaderboard",
+      "GameId": null,
+      "Name": "Test Leaderboard",
+      "EvaluationDataCategory": "GameData",
+      "Key": "Test Leaderboard",
+      "ActorType": "User",
+      "EvaluationDataType": "String",
+      "CriteriaScope": "Actor",
+      "LeaderboardType": "Latest"
+    }
+  ]
+}
