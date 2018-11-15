@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using PlayGen.SUGAR.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 using SUGARManager = PlayGen.SUGAR.Unity.SUGARManager;
@@ -11,8 +10,24 @@ public class GodScript : MonoBehaviour
 {
     public GameObject selectGroup;
 
-	// Use this for initialization
-	void Start ()
+    public GameObject gameUI;
+
+    public Text candyCoinCountText;
+
+    long candyCoinBuffer;
+
+    public long CandyCoinDisplay
+    {
+        get { return long.Parse(candyCoinCountText.text); }
+        set { candyCoinCountText.text = value.ToString(); }
+    }
+
+    int syncInterval = 5;
+    int syncCount = 1;
+    const string candyCoinKey = "CandyCoin";
+
+    // Use this for initialization
+    void Start ()
 	{
 	    SUGARManager.Account.DisplayLogInPanel(OnLoggedIn);
     }
@@ -25,6 +40,7 @@ public class GodScript : MonoBehaviour
         }
         else
         {
+            CandyCoinDisplay = SUGARManager.Resource.GetFromCache(candyCoinKey);
             SetupGroup();
         }
     }
@@ -60,8 +76,42 @@ public class GodScript : MonoBehaviour
         }
     }
 
-    private void OnGroupSetup(bool success = false)
+    void OnGroupSetup(bool success = true)
     {
-        
+        if (!success)
+        {
+            Debug.LogError("Failed to setup group.");
+        }
+        else
+        {
+            gameUI.SetActive(true);
+        }
+    }
+
+    public void AddCandyCoin()
+    {
+        CandyCoinDisplay++;
+        candyCoinBuffer++;
+    }
+
+    void Update()
+    {
+        if (Time.time > syncInterval * syncCount)
+        {
+            syncCount++;
+
+            if (candyCoinBuffer != 0)
+            {
+                SUGARManager.Resource.Add(candyCoinKey, candyCoinBuffer, (success, newValue) =>
+                {
+                    if (!success)
+                    {
+                        Debug.LogError($"Failed to update resource: {candyCoinBuffer}");
+                    }
+                });
+
+                candyCoinBuffer = 0;
+            }
+        }
     }
 }
