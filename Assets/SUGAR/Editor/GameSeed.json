@@ -1,6 +1,212 @@
 {
-  "game": "",
-  "achievements": [],
+  "game": "Candy Coin",
+  "achievements": [
+    {
+      "Token": "ScrapingBy",
+      "GameId": null,
+      "Name": "Scraping by",
+      "Description": "You can do it",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "100"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "100"
+        }
+      ]
+    },
+    {
+      "Token": "MovingUp",
+      "GameId": null,
+      "Name": "Moving up",
+      "Description": "Meh. Keep going.",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "1000"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "1000"
+        }
+      ]
+    },
+    {
+      "Token": "WorkingHard",
+      "GameId": null,
+      "Name": "Working hard",
+      "Description": "Work Harder!",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "10000"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "10000"
+        }
+      ]
+    },
+    {
+      "Token": "LookAtAllMyMoney",
+      "GameId": null,
+      "Name": "Look at all my money!",
+      "Description": "So money, much coin, wow",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "100000"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "100000"
+        }
+      ]
+    },
+    {
+      "Token": "StartedFromTheBottom",
+      "GameId": null,
+      "Name": "Started from the bottom now we here!",
+      "Description": "Getting paaaaaaiiiiiiidddddd",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "1000000"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "1000000"
+        }
+      ]
+    },
+    {
+      "Token": "TaxEvasion",
+      "GameId": null,
+      "Name": "Tax Evasion",
+      "Description": "Thanks for the moneys bruh",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "10000000"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "-9999999"
+        }
+      ]
+    },
+    {
+      "Token": "Gajillionaire",
+      "GameId": null,
+      "Name": "Gajillionaire",
+      "Description": "Don't you have something you should be doing?",
+      "ActorType": "User",
+      "EvaluationCriterias": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "CriteriaQueryType": "Sum",
+          "ComparisonType": "GreaterOrEqual",
+          "Scope": "Actor",
+          "Value": "100000000"
+        }
+      ],
+      "Rewards": [
+        {
+          "EvaluationDataKey": "CandyCoin",
+          "EvaluationDataCategory": "Resource",
+          "EvaluationDataType": "Long",
+          "Value": "100000000"
+        }
+      ]
+    }
+  ],
   "skills": [],
-  "leaderboards": []
+  "leaderboards": [
+    {
+      "Token": "GroupCandyLeaderboard",
+      "GameId": null,
+      "Name": "Group Candy Leaderboard",
+      "EvaluationDataCategory": "Resource",
+      "Key": "CandyCoin",
+      "ActorType": "Group",
+      "EvaluationDataType": "Long",
+      "CriteriaScope": "RelatedUsers",
+      "LeaderboardType": "Highest"
+    },
+    {
+      "Token": "PlayerCandyLeaderboard",
+      "GameId": null,
+      "Name": "Player Candy Leaderboard",
+      "EvaluationDataCategory": "Resource",
+      "Key": "CandyCoin",
+      "ActorType": "User",
+      "EvaluationDataType": "Long",
+      "CriteriaScope": "Actor",
+      "LeaderboardType": "Highest"
+    }
+  ]
 }
