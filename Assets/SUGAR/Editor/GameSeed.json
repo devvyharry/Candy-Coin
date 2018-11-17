@@ -195,7 +195,7 @@
       "ActorType": "Group",
       "EvaluationDataType": "Long",
       "CriteriaScope": "RelatedUsers",
-      "LeaderboardType": "Highest"
+      "LeaderboardType": "Cumulative"
     },
     {
       "Token": "PlayerCandyLeaderboard",

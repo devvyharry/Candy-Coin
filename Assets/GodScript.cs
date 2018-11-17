@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PlayGen.SUGAR.Common;
 using UnityEngine;
 using UnityEngine.UI;
 using SUGARManager = PlayGen.SUGAR.Unity.SUGARManager;
@@ -15,16 +16,17 @@ public class GodScript : MonoBehaviour
     public Text candyCoinCountText;
 
     long candyCoinBuffer;
-
-    public long CandyCoinDisplay
-    {
-        get { return long.Parse(candyCoinCountText.text); }
-        set { candyCoinCountText.text = value.ToString(); }
-    }
-
+    long candyCoinComitted;
+    
     int syncInterval = 5;
     int syncCount = 1;
     const string candyCoinKey = "CandyCoin";
+
+    const string minerKey = "Miner";
+    long minerCount;
+    int minerCostMultiplier = 10;
+    public Text minerCostDisplay;
+    public Button hireMinerButton;
 
     // Use this for initialization
     void Start ()
@@ -40,8 +42,23 @@ public class GodScript : MonoBehaviour
         }
         else
         {
-            CandyCoinDisplay = SUGARManager.Resource.GetFromCache(candyCoinKey);
-            SetupGroup();
+            candyCoinComitted = SUGARManager.Resource.GetFromCache(candyCoinKey);
+            UpdateCandyCoinDisplay();
+            SUGARManager.GameData.GetCumulative(minerKey, EvaluationDataType.Long, response =>
+            {
+                UpdateMinerCost();
+
+                if (response != null)
+                {
+                    var minerCount = int.Parse(response.Value);
+                    for (var i = 0; i < minerCount; i++)
+                    {
+                        AddMiner();
+                    }
+                }
+
+                SetupGroup();
+            });
         }
     }
 
@@ -90,8 +107,70 @@ public class GodScript : MonoBehaviour
 
     public void AddCandyCoin()
     {
-        CandyCoinDisplay++;
         candyCoinBuffer++;
+        UpdateCandyCoinDisplay();
+    }
+
+    public void HireMiner()
+    {
+        hireMinerButton.enabled = false;
+
+        var minerCost = Convert.ToInt64(Math.Pow(minerCostMultiplier, minerCount + 1));
+        if (candyCoinComitted + candyCoinBuffer >= minerCost)
+        {
+            var committedDiff = candyCoinComitted;
+            candyCoinComitted -= minerCost;
+            if (candyCoinComitted < 0)
+            {
+                candyCoinBuffer += candyCoinComitted;
+                candyCoinComitted = 0;
+            }
+
+            UpdateCandyCoinDisplay();
+
+            SUGARManager.Resource.Add(candyCoinKey, - (committedDiff - candyCoinComitted), (success, value) =>
+            {
+                if (!success)
+                {
+                    Debug.LogError("Failed to debit candy coin for miner.");
+                }
+                else
+                {
+                    SUGARManager.GameData.Send(minerKey, 1, gdSuccess =>
+                    {
+                        if (gdSuccess)
+                        {
+                            AddMiner();
+                        }
+                    });
+                }
+
+                hireMinerButton.enabled = true;
+            });
+        }
+        else
+        {
+            hireMinerButton.enabled = true;
+        }
+    }
+
+    void AddMiner()
+    {
+        minerCount++;
+        UpdateMinerCost();
+        Debug.Log("Added miner");
+        
+    }
+
+    void UpdateMinerCost()
+    {
+        var minerCost = Convert.ToInt64(Math.Pow(minerCostMultiplier, minerCount + 1));
+        minerCostDisplay.text = $"Hire miner for: C {minerCost}.";
+    }
+
+    void UpdateCandyCoinDisplay()
+    {
+        candyCoinCountText.text = (candyCoinComitted + candyCoinBuffer).ToString();
     }
 
     void Update()
@@ -110,6 +189,7 @@ public class GodScript : MonoBehaviour
                     }
                 });
 
+                candyCoinComitted += candyCoinBuffer;
                 candyCoinBuffer = 0;
             }
         }
